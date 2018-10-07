@@ -1,35 +1,42 @@
 //#region poinerEvents
 
-let evCache = new Array();
-let prevDiff = -1;
+var evCache = new Array();
+var prevDiff = -1;
 
 let currentGesture = null;
 
 const webcam = document.getElementById('webcam');
 
-const nodeState = {
-    imageWidth: webcam.x * 2,
-    scale: 1.8
+let nodeState = {
+    imageWidth: webcam.x,
+    scale: 1.8,
+    lastX: 0
 };
 
 webcam.addEventListener('pointerdown', pointDown);
 webcam.addEventListener('pointerup', cancelTouch);
 webcam.addEventListener('pointercancel', cancelTouch);
 webcam.addEventListener('pointermove', move);
+webcam.onpointerout = cancelTouch;
+webcam.onpointerleave = cancelTouch;
 
-function move (event) {
+function move(event) {
     if (!currentGesture) {
         return
     }
     event.preventDefault();
     console.log("move", event);
 
-    const {startX, startPosition} = currentGesture;
-    const {x} = event;
-    const dx = x - startX;
-    if (startPosition >= -nodeState.imageWidth && startPosition <= nodeState.imageWidth)
-        webcam.style.transform = `translateX(${dx}px) scale(${nodeState.scale})`;
-    currentGesture.startPosition = dx;
+    const { startX } = currentGesture;
+    const { x } = event;
+
+    if (evCache.length == 1) {
+        const dx = x - startX;
+        webcam.style.transform = `
+            translateX(${nodeState.lastX + dx}px)
+            scale(${nodeState.scale})`;
+        nodeState.lastX = dx;
+    }
 
     for (var i = 0; i < evCache.length; i++) {
         if (event.pointerId == evCache[i].pointerId) {
@@ -39,37 +46,34 @@ function move (event) {
     }
 
     if (evCache.length == 2) {
-        // Calculate the distance between the two pointers
-        var curDiff = Math.abs(evCache[0].clientX - evCache[1].clientX);
-
+        let curDiff = Math.abs(evCache[0].clientX - evCache[1].clientX);
         if (prevDiff > 0) {
             if (curDiff > prevDiff) {
-                console.log("Pinch moving OUT -> Zoom in", event);
-                webcam.style.transform = `translateX(${startPosition}px) scale(${2})`;
+                nodeState.scale *= curDiff / prevDiff;
+                webcam.style.transform = `translateX(${nodeState.lastX}px) scale(${nodeState.scale})`;
             }
             if (curDiff < prevDiff) {
-                console.log("Pinch moving IN -> Zoom out", event);
-                webcam.style.transform = `translateX(${startPosition}px) scale(${0.5})`;
+                nodeState.scale *= curDiff / prevDiff;
+                webcam.style.transform = `translateX(${nodeState.lastX}px) scale(${nodeState.scale})`;
             }
         }
         prevDiff = curDiff;
     }
 }
 
-function cancelTouch (event) {
+function cancelTouch(event) {
     console.log("up", event);
     currentGesture = null;
     remove_event(event);
     if (evCache.length < 2) prevDiff = -1;
 }
 
-function pointDown (event) {
+function pointDown(event) {
     console.log("down", event);
     evCache.push(event);
     webcam.setPointerCapture(event.pointerId);
     currentGesture = {
         startX: event.x,
-        startPosition: webcam.style.objectPosition.split('px')[0]
     };
 }
 
