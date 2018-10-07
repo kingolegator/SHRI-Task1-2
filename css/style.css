@@ -44,11 +44,6 @@ html, body {
     padding-top: 100px;
 }
 
-/* .row {
-    margin-right: -15px;
-    margin-left: -15px;
-} */
-
 .navigation {
     position: relative;
     padding: 0.5rem 1rem;
@@ -181,18 +176,16 @@ footer ul li > a, footer p {
 }
 
 .item-content-header {
-    /* padding-left: 2%; */
     margin-left: 20px;
-    /* font-size: 24px; */
     font-size: 1.1rem;
     font-family: Arial;
     font-weight: bold;
 }
 
 .device-header {
+    margin-top: 10px;
     display: flex;
     align-content: center;
-    /* padding: 10%, 10%; */
     margin-bottom: -3%;
 }
 
@@ -286,12 +279,8 @@ footer ul li > a, footer p {
 .music-control {
     margin-top: 5px;
     padding-bottom: 20px;
-    /* /padding-left: 10px; */
     width: 100%;
     display: flex;
-    /* flex-wrap: wrap; */
-    /* justify-content: space-between;
-    align-items: center; */
 }
 
 .device-content {
@@ -314,11 +303,7 @@ footer ul li > a, footer p {
 .cross, .next {
     display: none;
 }
-.grid-item:hover .cross, .grid-item:hover .next {
-    display: block;
-    position: absolute;
-    right: 20px;
-}
+
 .cross {
     top: 20px;
 }
@@ -402,14 +387,6 @@ footer ul li > a, footer p {
 .grid-container {
     display: grid;
     height: 100%;
-    /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-    grid-gap: 1px 1px;
-    grid-template-areas: "b b b b s s"
-                         "b b b b small1 small1"
-                         "b b b b small2 small2"
-                         "medium1 medium1 medium1 medium2 medium2 medium2"
-                         "medium1 medium1 medium1 medium2 medium2 medium2"; */
     grid-auto-flow: dense;
     grid-template-columns: repeat(4, 25%);
     grid-auto-rows: auto;
@@ -428,11 +405,9 @@ footer ul li > a, footer p {
 .l { 
     grid-column: span 4;
     grid-row: span 3;
-    /* grid-area: b; */
 }
 
 .s { 
-    /* grid-area: s; */
     grid-column: span 4;
     grid-row: span 1;
 }
@@ -494,23 +469,25 @@ footer ul li > a, footer p {
     
 }
 
+.control-webcam {
+    display: flex;
+    font-size: 0.85rem;
+    justify-content: space-between;
+    margin-bottom: -20px;
+}
+
 .device-footer {
     display: flex;
     font-size: 1.1rem;
-    /* margin-right: 52px;  */
-    /* justify-content: space-beetween; */
 }
 
 .device-footer p{
-    /* margin-right: 52px;  */
-    /* TODO smth */
     white-space: nowrap;
     margin-top: -5px;
 }
 
 .footer-button {
     display: contents;
-    /* margin-left: 13px; */
     margin-bottom: 16px;
 }
 
@@ -530,6 +507,16 @@ footer ul li > a, footer p {
 }
 
 @media only screen and (min-width: 769px) {
+    .control-webcam {
+        display: none;
+    }
+
+    .grid-item:hover .cross, .grid-item:hover .next {
+        display: block;
+        position: absolute;
+        right: 20px;
+    }
+
     .music-range {
         width: 90%;
     }
@@ -537,14 +524,6 @@ footer ul li > a, footer p {
     .grid-container {
         display: grid;
         height: 100%;
-        /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-        grid-gap: 1px 1px;
-        grid-template-areas: "b b b b s s"
-                             "b b b b small1 small1"
-                             "b b b b small2 small2"
-                             "medium1 medium1 medium1 medium2 medium2 medium2"
-                             "medium1 medium1 medium1 medium2 medium2 medium2"; */
         grid-auto-flow: dense;
         grid-template-columns: repeat(6, 16%);
         grid-auto-rows: auto;
@@ -554,11 +533,9 @@ footer ul li > a, footer p {
     .l { 
         grid-column: span 4;
         grid-row: span 3;
-        /* grid-area: b; */
     }
     
     .s { 
-        /* grid-area: s; */
         grid-column: span 2;
         grid-row: span 1;
     }
@@ -566,7 +543,6 @@ footer ul li > a, footer p {
     .m { 
         grid-column: span 3;
         grid-row: span 2;
-        /* grid-area: medium1; */
     }
 
     footer ul li {
@@ -610,7 +586,6 @@ footer ul li > a, footer p {
 
     .s .device-description {
         display: block;
-        /* margin-top: -6.5%; */
     }
 
     .l .device-description {
