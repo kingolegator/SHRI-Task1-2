@@ -20,12 +20,12 @@ const _maxValues = {
     constAngle: 15
 };
 
-webcam.onpointerdown = pointDown;
-webcam.onpointerup = cancelTouch;
-webcam.onpointercancel = cancelTouch;
-webcam.onpointermove = move;
-webcam.onpointerout = cancelTouch;
-webcam.onpointerleave = cancelTouch;
+webcam.addEventListener('pointerdown', pointDown);
+webcam.addEventListener('pointerup', cancelTouch);
+webcam.addEventListener('pointercancel', cancelTouch);
+webcam.addEventListener('pointermove', move);
+webcam.addEventListener('pointerout', cancelTouch);
+webcam.addEventListener('pointerleave', cancelTouch);
 
 function move(event) {
     //event.preventDefault();
