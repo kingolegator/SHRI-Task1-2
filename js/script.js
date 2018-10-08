@@ -15,7 +15,9 @@ const _maxValues = {
     minScale: 1,
     maxScale: 5,
     maxBrightness: 1,
-    minBrightness: 0
+    minBrightness: 0,
+    constDrop: 25,
+    constAngle: 15
 };
 
 webcam.onpointerdown = pointDown;
@@ -62,15 +64,16 @@ function move(event) {
         multiTouchPointerEvents.push({ drop: dropBeetwPoints.toFixed(6), angle: diffCtn.toFixed(6) });
         if (multiTouchPointerEvents.length >= 2) {
             switch (true) {
-                case (Math.abs(diffCtn - multiTouchPointerEvents[0].angle) > 15 &&
-                    Math.abs(dropBeetwPoints - multiTouchPointerEvents[multiTouchPointerEvents.length - 2].drop) < 25):
+                case (Math.abs(diffCtn - multiTouchPointerEvents[0].angle) > _maxValues.constAngle &&
+                    Math.abs(dropBeetwPoints - multiTouchPointerEvents[multiTouchPointerEvents.length - 2].drop) < _maxValues.constDrop):
+                    currentGesture.rotateAction = true;
                     webcam.style.filter = `brightness(${(Math.abs(diffCtn - multiTouchPointerEvents[0].angle)) / 20})`;
                     webcam.style.webkitFilter = `brightness(${(Math.abs(diffCtn - multiTouchPointerEvents[0].angle)) / 20})`;
                     light.innerText = `Яркость: ${Math.round(Math.abs(diffCtn - multiTouchPointerEvents[0].angle) * 1.1)}%`;
                     console.log("rotate");
                     break;
                 default:
-                    if (prevDiff > 0) {
+                    if (prevDiff > 0 && !currentGesture.rotateAction) {
                         if (curDiffX > prevDiff && ((transformState.scale * (curDiffX / prevDiff)) < _maxValues.maxScale)) {
                             transformState.scale *= curDiffX / prevDiff;
                             webcam.style.transform = `translateX(${transformState.scale < 2 ? 0 : transformState.lastPosition}px) scale(${transformState.scale})`;
@@ -107,7 +110,8 @@ function pointDown(event) {
     evCache.push(event);
     webcam.setPointerCapture(event.pointerId);
     currentGesture = {
-        startX: event.x
+        startX: event.x,
+        rotateAction: false
     };
 }
 
