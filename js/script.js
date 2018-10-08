@@ -94,7 +94,7 @@ function move(event) {
 function cancelTouch(event) {
     console.log("up", event);
     currentGesture = null;
-    transformState.lastPosition = !!webcam.style.transform ? Number(webcam.style.transform.split('scale')[0].split('(')[1].split('px)')[0]) : 0;
+    transformState.lastPosition = !!webcam.style.transform ? Number(webcam.style.transform.match(/-?[\d+\.]+/g)[0]) : 0;
     remove_event(event);
     if (evCache.length < 2) {
         prevDiff = -1;
