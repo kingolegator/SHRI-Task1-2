@@ -26,13 +26,12 @@ webcam.onpointercancel = cancelTouch;
 webcam.onpointermove = move;
 webcam.onpointerout = cancelTouch;
 webcam.onpointerleave = cancelTouch;
-webcam.onpointerout = cancelTouch;
-webcam.onpointerleave = cancelTouch;
 
 function move(event) {
-
-    event.preventDefault();
-
+    //event.preventDefault();
+    if (!currentGesture) {
+        return;
+    }
     for (var i = 0; i < evCache.length; i++) {
         if (event.pointerId == evCache[i].pointerId) {
             evCache[i] = event;
@@ -41,8 +40,6 @@ function move(event) {
     }
 
     if (evCache.length == 1) {
-        if (!currentGesture)
-            return;
         const { x } = event;
         const dx = x - currentGesture.startX;
         if ((((webcam.offsetWidth * transformState.scale) - webcam.offsetWidth) / (transformState.scale * 2) * transformState.scale) > Math.abs(dx + transformState.lastPosition)) {
@@ -63,32 +60,30 @@ function move(event) {
 
         multiTouchPointerEvents.push({ drop: dropBeetwPoints.toFixed(6), angle: diffCtn.toFixed(6) });
         if (multiTouchPointerEvents.length >= 2) {
-            switch (true) {
-                case (Math.abs(diffCtn - multiTouchPointerEvents[0].angle) > _maxValues.constAngle &&
-                    Math.abs(dropBeetwPoints - multiTouchPointerEvents[multiTouchPointerEvents.length - 2].drop) < _maxValues.constDrop):
-                    currentGesture.rotateAction = true;
-                    webcam.style.filter = `brightness(${(Math.abs(diffCtn - multiTouchPointerEvents[0].angle)) / 20})`;
-                    webcam.style.webkitFilter = `brightness(${(Math.abs(diffCtn - multiTouchPointerEvents[0].angle)) / 20})`;
-                    light.innerText = `Яркость: ${Math.round(Math.abs(diffCtn - multiTouchPointerEvents[0].angle) * 1.1)}%`;
-                    console.log("rotate");
-                    break;
-                default:
-                    if (prevDiff > 0 && !currentGesture.rotateAction) {
-                        if (curDiffX > prevDiff && ((transformState.scale * (curDiffX / prevDiff)) < _maxValues.maxScale)) {
-                            transformState.scale *= curDiffX / prevDiff;
-                            webcam.style.transform = `translateX(${transformState.scale < 2 ? 0 : transformState.lastPosition}px) scale(${transformState.scale})`;
-                            webcam.style.webkitTransform = `translateX(${transformState.scale < 2 ? 0 : transformState.lastPosition}px) scale(${transformState.scale})`;
-                        }
-                        if (curDiffX < prevDiff && ((transformState.scale * (curDiffX / prevDiff)) > _maxValues.minScale)) {
-                            transformState.scale *= curDiffX / prevDiff;
-                            webcam.style.transform = `translateX(${transformState.scale < 2 ? 0 : (transformState.lastPosition / transformState.scale)}px) scale(${transformState.scale})`;
-                            webcam.style.webkitTransform = `translateX(${transformState.scale < 2 ? 0 : (transformState.lastPosition / transformState.scale)}px) scale(${transformState.scale})`;
-                        }
+            if (Math.abs(diffCtn - multiTouchPointerEvents[0].angle) > _maxValues.constAngle &&
+                Math.abs(dropBeetwPoints - multiTouchPointerEvents[multiTouchPointerEvents.length - 2].drop) < _maxValues.constDrop) {
+                currentGesture.rotateAction = true;
+                webcam.style.filter = `brightness(${(Math.abs(diffCtn - multiTouchPointerEvents[0].angle)) / 20})`;
+                webcam.style.webkitFilter = `brightness(${(Math.abs(diffCtn - multiTouchPointerEvents[0].angle)) / 20})`;
+                light.innerText = `Яркость: ${Math.round(Math.abs(diffCtn - multiTouchPointerEvents[0].angle) * 1.1)}%`;
+                console.log("rotate");
+            }
+            else {
+                if (prevDiff > 0 && !currentGesture.rotateAction) {
+                    if (curDiffX > prevDiff && ((transformState.scale * (curDiffX / prevDiff)) < _maxValues.maxScale)) {
+                        transformState.scale *= curDiffX / prevDiff;
+                        webcam.style.transform = `translateX(${transformState.scale < 2 ? 0 : transformState.lastPosition}px) scale(${transformState.scale})`;
+                        webcam.style.webkitTransform = `translateX(${transformState.scale < 2 ? 0 : transformState.lastPosition}px) scale(${transformState.scale})`;
                     }
-                    console.log("pinch");
+                    if (curDiffX < prevDiff && ((transformState.scale * (curDiffX / prevDiff)) > _maxValues.minScale)) {
+                        transformState.scale *= curDiffX / prevDiff;
+                        webcam.style.transform = `translateX(${transformState.scale < 2 ? 0 : (transformState.lastPosition / transformState.scale)}px) scale(${transformState.scale})`;
+                        webcam.style.webkitTransform = `translateX(${transformState.scale < 2 ? 0 : (transformState.lastPosition / transformState.scale)}px) scale(${transformState.scale})`;
+                    }
                     zoom.innerText = `Приближение: ${Math.round(transformState.scale * 100) - 100}%`;
-                    prevDiff = curDiffX;
-                    break;
+                    console.log("pinch");
+                }
+                prevDiff = curDiffX;
             }
         }
     }
