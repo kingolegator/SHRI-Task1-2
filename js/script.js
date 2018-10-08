@@ -47,7 +47,7 @@ function move(event) {
             webcam.style.transform = `
                 translateX(${dx + transformState.lastPosition}px)
                 scale(${transformState.scale})`;
-            webcam.style.webKitTransform = `
+            webcam.style.webkitTransform = `
                 translateX(${dx + transformState.lastPosition}px)
                 scale(${transformState.scale})`;
         }
@@ -74,12 +74,12 @@ function move(event) {
                         if (curDiffX > prevDiff && ((transformState.scale * (curDiffX / prevDiff)) < _maxValues.maxScale)) {
                             transformState.scale *= curDiffX / prevDiff;
                             webcam.style.transform = `translateX(${transformState.scale < 2 ? 0 : transformState.lastPosition}px) scale(${transformState.scale})`;
-                            webcam.style.webKitTransform = `translateX(${transformState.scale < 2 ? 0 : transformState.lastPosition}px) scale(${transformState.scale})`;
+                            webcam.style.webkitTransform = `translateX(${transformState.scale < 2 ? 0 : transformState.lastPosition}px) scale(${transformState.scale})`;
                         }
                         if (curDiffX < prevDiff && ((transformState.scale * (curDiffX / prevDiff)) > _maxValues.minScale)) {
                             transformState.scale *= curDiffX / prevDiff;
                             webcam.style.transform = `translateX(${transformState.scale < 2 ? 0 : (transformState.lastPosition / transformState.scale)}px) scale(${transformState.scale})`;
-                            webcam.style.webKitTransform = `translateX(${transformState.scale < 2 ? 0 : (transformState.lastPosition / transformState.scale)}px) scale(${transformState.scale})`;
+                            webcam.style.webkitTransform = `translateX(${transformState.scale < 2 ? 0 : (transformState.lastPosition / transformState.scale)}px) scale(${transformState.scale})`;
                         }
                     }
                     console.log("pinch");
