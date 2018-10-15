@@ -14,7 +14,7 @@ module.exports = function (app) {
     })
 
     //#region postHandler
-    app.post('/status', api.postStatus)
+    app.post('/status', api.timeUpStatus)
 
     app.post('/api/events', api.eventsWitoutFilters)
 
@@ -26,7 +26,7 @@ module.exports = function (app) {
         next();
     })
     
-    app.get('/status', api.getStatus)
+    app.get('/status', api.timeUpStatus)
 
     app.get('/api/events', api.eventsWitoutFilters)
 

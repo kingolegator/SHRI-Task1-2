@@ -24,13 +24,7 @@ const validateValueOfProperty = (key, values) => {
 }
 
 module.exports = {
-    getStatus: function (request, response, next) {
-        const time = process.uptime();
-        const uptime = `${time}`.toHHMMSS();
-        response.status(200).send(uptime);
-    },
-
-    postStatus: function (request, response, next) {
+    timeUpStatus: function (request, response, next) {
         const time = process.uptime();
         const uptime = `${time}`.toHHMMSS();
         response.status(200).send(uptime);
