@@ -16,9 +16,8 @@ module.exports = function (app) {
     //#region postHandler
     app.post('/status', api.timeUpStatus)
 
-    app.post('/api/events', api.eventsWitoutFilters)
+    app.post('/api/events', api.eventsHandling)
 
-    app.post('/api/events', api.eventsWithFilters)
     //#endregion
 
     //#region getHandler
@@ -28,9 +27,8 @@ module.exports = function (app) {
     
     app.get('/status', api.timeUpStatus)
 
-    app.get('/api/events', api.eventsWitoutFilters)
+    app.get('/api/events', api.eventsHandling)
 
-    app.get('/api/events', api.eventsWithFilters)
     //#endregion
 
     app.use(function (req, res, next) {
