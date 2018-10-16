@@ -1,35 +1,36 @@
 "use strict"
 const fs = require("fs");
-const constants = require("../app/constant")
-require("../app/helper")
+const constants = require("../app/constant");
+require("../app/helper");
 
-const getEventsFile = function (callback) {
+const getEventsFile = (callback) => {
     fs.readFile("./data/events.json", "utf8", callback);
-}
+};
 
-const isEmpty = function (val) {
-    return !(typeof (val) != "undefined" && val != null);
-}
+const isEmpty = (val) => {
+    return !(typeof (val) !== "undefined" && val !== null);
+};
 
 const validateValueOfProperty = (key, values) => {
     if (!isEmpty(constants[key])) {
         for (let index = 0; index < values.length; index++) {
-            if (constants[key].indexOf(values[index]) == -1)
+            if (constants[key].indexOf(values[index]) === -1) {
                 return false;
+            }
         }
         return true;
     }
     return true;
-}
+};
 
 module.exports = {
-    timeUpStatus: function (request, response) {
+    timeUpStatus: (request, response) => {
         const time = process.uptime();
         const uptime = `${time}`.toHHMMSS();
         return response.status(200).send(uptime);
     },
 
-    eventsHandling: function (request, response) {
+    eventsHandling: (request, response) => {
         let queryParam;
         switch (request.method) {
             case "POST":

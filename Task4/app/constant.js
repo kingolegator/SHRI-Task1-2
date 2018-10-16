@@ -9,6 +9,6 @@ const constantValues = {
         "l"
     ]
     //... can be expanded further
-}
+};
 
 module.exports = constantValues;
