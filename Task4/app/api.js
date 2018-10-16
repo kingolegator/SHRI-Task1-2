@@ -1,6 +1,5 @@
-'use strict'
+"use strict"
 const fs = require("fs");
-const log = console.log
 const constants = require("../app/constant")
 require("../app/helper")
 
@@ -24,20 +23,20 @@ const validateValueOfProperty = (key, values) => {
 }
 
 module.exports = {
-    timeUpStatus: function (request, response, next) {
+    timeUpStatus: function (request, response) {
         const time = process.uptime();
         const uptime = `${time}`.toHHMMSS();
-        response.status(200).send(uptime);
+        return response.status(200).send(uptime);
     },
 
     eventsHandling: function (request, response) {
         let queryParam;
         switch (request.method) {
             case "POST":
-                queryParam = Object.assign({}, request.body);
+                queryParam = request.body;
                 break;
             case "GET":
-                queryParam = Object.assign({}, request.query);
+                queryParam = request.query;
                 break;
         }
         let pageNumb = queryParam.pageNumb;
