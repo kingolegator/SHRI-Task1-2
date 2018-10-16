@@ -6,9 +6,7 @@ const log = console.log;
 const port = 8000;
 const router = require("./controllers/router");
 
-/**
- * Add headers
- */
+//Add headers
 app.use((request, response, next) => {
     response.setHeader("Access-Control-Allow-Origin", `http://localhost:${8000}`);
     response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");

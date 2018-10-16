@@ -13,18 +13,14 @@ String.prototype.toHHMMSS = function () {
         seconds = `0${seconds}`;
     }
     return `${hours}:${minutes}:${seconds}`;
-}
+};
 
 Object.eventsFilter = (obj, filter) => {
-    const filterPropery = Object.keys(filter)[0];
-    const filterValues = filter[filterPropery].split(':');
-
     let resultArr = [];
-
-    for (let i = 0; i < obj.length; i++) {
-        if (obj[i].hasOwnProperty(filterPropery)) {
-            if (filterValues.indexOf(obj[i][filterPropery]) !== -1) {
-                resultArr.push(obj[i])
+    for (let index in obj) {
+        if (obj[index].hasOwnProperty(filter.key)) {
+            if (filter.value.indexOf(obj[index][filter.key]) !== -1) {
+                resultArr.push(obj[index]);
             }
         }
     }

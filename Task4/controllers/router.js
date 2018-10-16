@@ -23,11 +23,11 @@ module.exports = (app) => {
     });
     app.get("/status", api.timeUpStatus);
     app.get("/api/events", api.eventsHandling);
-    
+
     //#endregion
 
     app.use((req, res, next) => {
         log("not found");
         res.status(404).send("<h1>Page not found</h1>");
     });
-}
+};

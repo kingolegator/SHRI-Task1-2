@@ -19,37 +19,22 @@
     Предусмотрена паггинация для GET и POST запросов, за нее отвечают следующие параметры: pageNumb (номер страницы, начинается с 0), maxEntities (лимит                запрашиваемых сущностей для страницы). Предусмотрена валидация значений
 
 4. **Test:**
-    {
         *GET*: [
-        <http://localhost:8000/status>,
-        <http://localhost:8000/api/events>,
-        <http://localhost:8000/api/events?type=info>,
-        <http://localhost:8000/api/events?type=info:fdf>, //*test filterParamValid*
-        <http://localhost:8000/api/events?size=m:l>
-        <http://localhost:8000/api/events?size=m:l&pageNumb=1&maxEntities=2>
-        <http://localhost:8000/api/events?&pageNumb=1&maxEntities=cdscd>, //*test pagin valid*
+        * <http://localhost:8000/status>,
+        * <http://localhost:8000/api/events>,
+        * <http://localhost:8000/api/events?type=info>,
+        * <http://localhost:8000/api/events?type=info:fdf>, //*test filterParamValid*
+        * <http://localhost:8000/api/events?size=m:l>
+        * <http://localhost:8000/api/events?size=m:l&pageNumb=1&maxEntities=2>
+        * <http://localhost:8000/api/events?&pageNumb=1&maxEntities=cdscd>, //*test pagin valid*
         ],
         *POST*: [
-            <http://localhost:8000/status>,
-            <http://localhost:8000/api/events>,
-            <http://localhost:8000/api/events> {
-                "type": "info"
-            },
-            //*test filterParamValid()
-            <http://localhost:8000/api/events> {
-                "type": "info:fdf"
-            },
-            <http://localhost:8000/api/events> {
-                "size": "m:l",
-                "pageNumb": 1,
-                "maxEntities" 2
-            },
-            //*test pagin valid*
-            <http://localhost:8000/api/events> {
-                "pageNumb": 1,
-                "maxEntities": "cdscd"
-            }
+            * <http://localhost:8000/status>
+            * <http://localhost:8000/api/events>
+            * <http://localhost:8000/api/events> {"type": "info"}
+            * <http://localhost:8000/api/events> {"type": "info:fdf"} //*test filterParamValid()*
+            * <http://localhost:8000/api/events> {"size": "m:l", "pageNumb": 1, "maxEntities" 2}
+            * <http://localhost:8000/api/events> {"pageNumb": 1, "maxEntities": "cdscd"} //*test pagin valid*
         ]
-    }
     
 
