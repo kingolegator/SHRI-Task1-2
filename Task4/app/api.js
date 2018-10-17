@@ -8,7 +8,7 @@ const getEventsFile = (callback) => {
 };
 
 const isEmpty = (val) => {
-    return !(typeof (val) !== "undefined" && val !== null);
+    return !(typeof (val) !== "undefined" && val !== null && val !== "");
 };
 
 //checking for the existence of a key value in constants. If there is no such key in the constants return true
